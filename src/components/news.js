@@ -3,7 +3,8 @@ import {connect} from "react-redux";
 import { Glyphicon, Panel, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { Image } from 'react-bootstrap'
 import { withRouter } from "react-router-dom";
-import {fetchNews} from "../actions/newsActions";
+import {fetchNews, setNews} from "../actions/newsActions";
+import {LinkContainer} from "react-router-bootstrap";
 
 //support routing by creating a new component
 
@@ -15,6 +16,13 @@ class News extends Component {
         if (this.props.selectedNews == null) {
             dispatch(fetchNews(this.props.newsId));
         }
+    }
+    handleClick = (news) => {
+        function openInNewTab(url) {
+            var win = window.open(url, '_blank');
+            win.focus();
+        }
+        openInNewTab(news.url);
     }
 
     render() {
@@ -46,7 +54,10 @@ class News extends Component {
             return (
                 <Panel>
                     <Panel.Heading>Saved Articles</Panel.Heading>
-                    <Panel.Body><Image className="image" src={currentNews.urlToImage} thumbnail /></Panel.Body>
+                    <Panel.Body to={'/saved'} onClick={() => this.handleClick(currentNews)}>
+                        <Image className="image" src={currentNews.urlToImage} thumbnail />
+                    </Panel.Body>
+
 
                 </Panel>
             );

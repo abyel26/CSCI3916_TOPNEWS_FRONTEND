@@ -24,6 +24,11 @@ class newsList extends Component {
     }
 
     handleClick = (news) => {
+        function openInNewTab(url) {
+            var win = window.open(url, '_blank');
+            win.focus();
+        }
+        openInNewTab(news.url);
         const {dispatch} = this.props;
         dispatch(setNews(news));
     }
@@ -45,7 +50,7 @@ class newsList extends Component {
                             <LinkContainer to={''} onClick={() => this.handleClick(news)}>
                                 <p> {news.content} </p>
                             </LinkContainer>
-                            <LinkContainer to={'/saved/'} onClick={() => this.handleClick(news)}>
+                            <LinkContainer to={'/today/'} onClick={() => this.handleClick(news)}>
                                 <Image className="image" src={news.urlToImage} thumbnail/>
                             </LinkContainer>
                             </div>
